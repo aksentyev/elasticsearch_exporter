@@ -282,11 +282,12 @@ func (c *Collector) Transform(allStats *NodeStatsResponse) (metrics []*exportert
 }
 
 func (c *Collector) ConvertToMetric(name string, v float64, t string, l interface{}) *exportertools.Metric {
+    processedName := name
     switch l.(type) {
     case map[string]string:
         re := regexp.MustCompile("(.*)_count")
         match := re.FindStringSubmatch(name)[1]
-        name = fmt.Sprintf("%v_%v_count", match, l.(map[string]string)["type"])
+        processedName = fmt.Sprintf("%v_%v_count", match, l.(map[string]string)["type"])
     }
 
     var desc string
@@ -298,13 +299,12 @@ func (c *Collector) ConvertToMetric(name string, v float64, t string, l interfac
     }
 
     m := exportertools.Metric {
-        Name:        name,
+        Name:        processedName,
         Description: desc,
         Type:        exportertools.StringToType(t),
         Value:       v,
         Labels:      c.Labels,
     }
-    fmt.Printf("%v: %v\n", name, c.Labels)
 
     return &m
 }
