@@ -9,14 +9,13 @@ RUN apk add --no-cache git build-base
 ENV GOROOT /usr/local/go
 RUN cd /go/src/github.com/aksentyev/postgres_exporter \
     && go get -d \
+    && go test -v \
     && go build -o /bin/postgres_exporter \
     && rm -rf /go/src/github.com/aksentyev/postgres_exporter
 
 RUN apk del --purge git build-base
 
 RUN mkdir /config
-COPY exporter/queries.yaml /config/queries.yaml
-
 WORKDIR /config
 
 ENTRYPOINT ["/bin/elastic_exporter", "-log.level", "debug"]
