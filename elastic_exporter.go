@@ -21,9 +21,9 @@ import (
 // landingPage contains the HTML served at '/'.
 // TODO: Make this nicer and more informative.
 var landingPage = []byte(`<html>
-<head><title>Postgres exporter</title></head>
+<head><title>Elasticsearch metric exporter</title></head>
 <body>
-<h1>Postgres exporter</h1>
+<h1>Elasticsearch metric exporter</h1>
 <p><a href='` + *metricPath + `'>Metrics</a></p>
 </body>
 </html>
