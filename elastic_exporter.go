@@ -123,21 +123,19 @@ func printVersions(){
 
 func listenAndRegister() {
     for svc := range d.ToRegister {
-        if len(svc.ExporterOptions) >= 1 {
-            config := exporter.Config{
-                URL:             fmt.Sprintf("http://%v:9200%v", svc.Address, esURI),
-                Labels:          svc.ExtraLabels,
-                ExporterOptions: svc.ExporterOptions,
-                CacheTTL:        *scrapeInterval,
-            }
-            exp, err := exporter.CreateAndRegister(&config)
-            if err == nil {
-                d.Register(svc, exp)
-                log.Infof("Registered %v %v", svc.Name, svc.Address)
-            } else {
-                log.Warnf("Register was failed for service %v %v %v", svc.Name, svc.Address, err)
-                exp.Close()
-            }
+        config := exporter.Config{
+            URL:             fmt.Sprintf("http://%v:9200%v", svc.Address, esURI),
+            Labels:          svc.ExtraLabels,
+            ExporterOptions: svc.ExporterOptions,
+            CacheTTL:        *scrapeInterval,
+        }
+        exp, err := exporter.CreateAndRegister(&config)
+        if err == nil {
+            d.Register(svc, exp)
+            log.Infof("Registered %v %v", svc.Name, svc.Address)
+        } else {
+            log.Warnf("Register was failed for service %v %v %v", svc.Name, svc.Address, err)
+            exp.Close()
         }
     }
 }
