@@ -49,7 +49,7 @@ var (
         "Look for services that have the tag specified.",
     )
     listenAddress = flag.String(
-        "listen", ":9113",
+        "listen", ":9108",
         "Address to listen on for web interface and telemetry.",
     )
     metricPath = flag.String(
