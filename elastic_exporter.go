@@ -45,7 +45,7 @@ var (
         "Consul datacenter",
     )
     consulTag = flag.String(
-        "consul.tag", "postgres",
+        "consul.tag", "elastic",
         "Look for services that have the tag specified.",
     )
     listenAddress = flag.String(

@@ -5,13 +5,13 @@ import (
     "github.com/aksentyev/hubble/exportertools"
 )
 
-// Exporter collects Postgres metrics. It implements prometheus.Collector.
+// Exporter collects elastic metrics. It implements prometheus.Collector.
 type EsExporter struct {
     *exportertools.BaseExporter
     Config   *Config
 }
 
-// NewExporter returns a new PostgreSQL exporter for the provided DSN.
+// NewExporter returns a new elastic exporter for the provided DSN.
 func CreateAndRegister(config *Config) (*EsExporter, error) {
     exp := EsExporter{
         Config: config,
